@@ -37,11 +37,6 @@ customMYS大致按照米游社app界面样式，现在实现的功能有用户�
 # 快速运行  
 
 1.克隆本项目到本地  
-
-```
-git@github.com:lenve/VBlog.git
-```  
-
 2.找到customMYSserver项目中resources目录下的customMYS.sql文件，在MySQL数据库中执行  
 3.根据自己本地情况修改数据库配置，数据库配置在SpringBoot项目的application.properties中  
 4.在IntelliJ IDEA中运行customMYSserver项目  
