@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.ArticleTopicsMapper">
+    <select id="getArticleTopicsByAid" parameterType="long" resultType="org.sang.bean.ArticleTopic">
+        SELECT ats.`aid`,ats.`tid` as id,t.`topicname`,a.`pid` FROM article a join articleTopics ats on a.`id`=ats.`aid` join topic t on ats.`tid`=t.`id` WHERE a.`id`=#{aid}
+    </select>
+    <insert id="saveArticleTopics" parameterType="org.sang.bean.ArticleTopic">
+        INSERT INTO `articleTopics`(aid,tid) VALUES
+        <foreach collection="topicList" item="topic" separator=",">
+            (#{aid},#{topic.id})
+        </foreach>
+    </insert>
+    <select id="searchTopicsByKeywords" parameterType="string" resultType="org.sang.bean.Topic">
+        SELECT t.*,p.`platename` FROM topic t,plate p WHERE t.`pid`=p.`id`
+        <if test="keywords!=null">
+            AND t.`topicname` LIKE concat('%',#{keywords},'%')
+        </if>
+    </select>
+    <select id="getTopicById" parameterType="long" resultType="org.sang.bean.Topic">
+        SELECT t.*,p.`platename` FROM topic t JOIN plate p ON t.`pid`=p.`id` WHERE t.`id`=#{id}
+    </select>
+</mapper>

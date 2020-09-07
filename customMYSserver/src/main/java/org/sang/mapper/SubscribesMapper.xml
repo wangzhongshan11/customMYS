@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.SubscribesMapper">
+    <select id="getSubscribesByUsername" parameterType="string" resultType="org.sang.bean.Subscribe">
+        SELECT s.`id`,u1.`id` as aid,u2.`id` as bid,u2.`username`,u2.`userface`,u2.`nickname`,u2.`userSignature`,u2.`userSex`,s.`subscribeDate` FROM user u1 join subscribe s on u1.`id`=s.`aid` join user u2 on s.`bid`=u2.`id` WHERE u1.`username`=#{username}
+    </select>
+    <select id="getFansByUsername" parameterType="string" resultType="org.sang.bean.Subscribe">
+        SELECT s.`id`,u2.`id` as aid,u1.`id` as bid, u2.`username`,u2.`userface`,u2.`nickname`,u2.`userSignature`,u2.`userSex`,s.`subscribeDate` FROM user u1 join subscribe s on u1.`id`=s.`bid` join user u2 on s.`aid`=u2.`id` WHERE u1.`username`=#{username}
+    </select>
+    <select id="getSubscribesById" parameterType="long" resultType="org.sang.bean.Subscribe">
+        SELECT s.`id`,u1.`id` as aid,u2.`id` as bid,u2.`username`,u2.`userface`,u2.`nickname`,u2.`userSignature`,u2.`userSex`,s.`subscribeDate` FROM user u1 join subscribe s on u1.`id`=s.`aid` join user u2 on s.`bid`=u2.`id` WHERE u1.`id`=#{id}
+    </select>
+    <select id="getFansById" parameterType="long" resultType="org.sang.bean.Subscribe">
+        SELECT s.`id`,u2.`id` as aid,u1.`id` as bid, u2.`username`,u2.`userface`,u2.`nickname`,u2.`userSignature`,u2.`userSex`,s.`subscribeDate` FROM user u1 join subscribe s on u1.`id`=s.`bid` join user u2 on s.`aid`=u2.`id` WHERE u1.`id`=#{id}
+    </select>
+    <delete id="cancelSubscribeUser" parameterType="Long">
+        DELETE FROM subscribe WHERE aid=#{aid} AND bid=#{bid}
+    </delete>
+    <insert id="subscribeUser" parameterType="org.sang.bean.Subscribe" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO subscribe(aid,bid,subscribeDate) VALUES (#{aid},#{bid},#{subscribeDate})
+    </insert>
+    <select id="getNewUSubscribeById" parameterType="long" resultType="org.sang.bean.Subscribe">
+        SELECT ss.*,u.`username`,u.`userface`,u.`nickname`,u.`userSignature`,u.`userSex` FROM subscribe ss JOIN user u ON ss.`bid`=u.`id` WHERE ss.aid=#{aid} ORDER BY ss.`subscribeDate` DESC LIMIT 0,1
+    </select>
+</mapper>

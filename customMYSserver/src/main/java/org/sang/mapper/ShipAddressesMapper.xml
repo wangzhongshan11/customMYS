@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.ShipAddressesMapper">
+    <select id="getShipAddressesByUsername" parameterType="string" resultType="org.sang.bean.ShipAddress">
+        SELECT us.`id`,us.`uid`,us.`uRealname`,us.`shipAddress`,us.`detailShipAddress`,us.`uAreaCode`,us.`uPhone`,us.`isDefaultShipAddr` FROM user u join userShipAddress us on u.`id`=us.`uid` WHERE u.`username`=#{username}
+    </select>
+    <insert id="newShipAddress" parameterType="org.sang.bean.ShipAddress">
+        INSERT INTO userShipAddress(id,uid,uRealname,shipAddress,detailShipAddress,uAreaCode,uPhone,isDefaultShipAddr) VALUES (#{id},#{uid},#{uRealname},#{shipAddress},#{detailShipAddress},#{uAreaCode},#{uPhone},#{isDefaultShipAddr})
+    </insert>
+    <update id="noDefaultAddress">
+        UPDATE userShipAddress SET isDefaultShipAddr=0;
+    </update>
+    <update id="changeDefaultAddress">
+        UPDATE userShipAddress SET isDefaultShipAddr=1 where id=#{changeIndex};
+    </update>
+    <update id="editChosenShipAddress" parameterType="org.sang.bean.ShipAddress">
+        UPDATE userShipAddress SET uid=#{uid},uRealname=#{uRealname},shipAddress=#{shipAddress},detailShipAddress=#{detailShipAddress},uAreaCode=#{uAreaCode},uPhone=#{uPhone} WHERE id=#{id}
+    </update>
+    <delete id="deleteChosenShipAddress">
+        DELETE FROM userShipAddress where id=#{deleteIndex}
+    </delete>
+</mapper>

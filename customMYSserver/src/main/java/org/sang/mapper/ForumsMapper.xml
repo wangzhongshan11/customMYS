@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.sang.mapper.ForumsMapper">
+    <select id="getForumsByUsername" parameterType="string" resultType="org.sang.bean.UserForum">
+        SELECT uf.`fid`,f.`forumname`,uf.`uForumGrade`,uf.`uForumExperience`,f.`forumface` FROM user u join userforum uf on u.`id`=uf.`uid` join forum f on uf.`fid`=f.`id` WHERE u.`username`=#{username}
+    </select>
+    <select id="getForumsById" parameterType="long" resultType="org.sang.bean.UserForum">
+        SELECT uf.`fid`,f.`forumname`,uf.`uForumGrade`,uf.`uForumExperience`,f.`forumface` FROM user u join userforum uf on u.`id`=uf.`uid` join forum f on uf.`fid`=f.`id` WHERE u.`id`=#{id}
+    </select>
+
+    <select id="getForumsAll" resultType="org.sang.bean.Forum">
+        SELECT * FROM forum
+    </select>
+</mapper>

@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Created-By: IntelliJ IDEA
+Built-By: 15942
+Build-Jdk: 14
+Implementation-Title: blogserver
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: org.sang
+Main-Class: ${start-class}
+
